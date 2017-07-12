@@ -1,0 +1,226 @@
+{% extends 'apply_base.html' %}
+
+{% block htmltitle %}校园露天场地申请{% endblock %}
+
+{% block top_title %}<h1>校园露天场地申请</h1>{% endblock %}
+
+{% block main_content %}
+    </br>
+    <form method="POST" enctype="multipart/form-data" action="{{ post_url }}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td class="title">活动项目</td>
+                <td>
+                    {{ form.activity }}
+                    <div class="error">
+                    {% for error in form.activity.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+                <td class="title">申请部门</td>
+                <td>
+                    {{ form.organization }}
+                    <input type="text" disabled="disabled" value="{{user.organization}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">申请人姓名</td>
+                <td>
+                    {{ form.applicant_name }}
+                    <div class="error">
+                    {% for error in form.applicant_name.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+                <td class="title">联系电话</td>
+                <td>
+                    {{ form.applicant_phone_number }}
+                    <div class="error">
+                    {% for error in form.applicant_phone_number.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">申请人学号</td>
+                <td>
+                    {{ form.applicant_stu_id }}
+                    <div class="error">
+                    {% for error in form.applicant_stu_id.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+                <td class="title">申请人学院</td>
+                <td>
+                    {{ form.applicant_college }}
+                    <div class="error">
+                    {% for error in form.applicant_college.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">活动类型</td>
+                <td colspan="3">
+                    {{ form.activity_type }}
+                    <span>其它：</span>
+                    {{ form.other_activity_type }}
+                    <div class="error">
+                    {% for error in form.activity_type.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                    <div class="error">
+                    {% for error in form.other_activity_type.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">活动地点</td>
+                <td colspan="3">
+                    <style type="text/css">
+                        ul{
+                            display: inline;
+                        }
+                        li{
+                            display: inline;
+                        }
+                    </style>
+                    {{ form.place }}{{ form.other_place }}
+                    <div class="error">
+                    {% for error in form.place.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    {% for error in form.other_place.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                    <div style="margin-left: 10px;">
+                        若以上选项没有你要申请的场地，请选择“其它”并在后面的输入框输入要申请的场地
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">活动时间</td>
+                <td colspan="3">
+                    {{ form.start_date }}
+                    <span>——</span>
+                    {{ form.end_date }}
+                    <span>(注：只能申请14天内的场地,设点最多2天) </span>
+                    <div class="error">
+                    {% for error in form.start_date.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                    <div class="error">
+                    {% for error in form.end_date.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">活动时段</td>
+                <td colspan="3">
+                    {{ form.time }}
+                    <div class="error">
+                    {% for error in form.time.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">活动策划<br />文件上传</td>
+                <td colspan="3">
+                    {{ form.plan_file }}
+                    <span>(注：只能上传doc、txt格式文件,上传文件大小不能超过10M)</span>
+                    <div class="error">
+                    {% for error in form.plan_file.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>  
+                </td>
+            </tr>
+            <tr>
+                <td class="title">活动内容简介</td>
+                <td colspan="3">
+                    {{ form.activity_summary }}
+                    <div class="error">
+                    {% for error in form.activity_summary.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="title" rowspan="2">
+                      <h5 style="color: red; text-align:center">(必填，若无赞助，请填无)</h5>
+                      有关赞助说明
+                </td>
+                <td colspan="3">
+                    <span>赞助商：</span>
+                    {{ form.sponsor }}
+                    <span>赞助金额及物品：</span>
+                    {{ form.sponsorship }}
+                    <div class="error">
+                    {% for error in form.sponsor.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                    <div class="error">
+                    {% for error in form.sponsorship.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <span>赞助财物主要用于：</span>
+                    {{ form.sponsorship_usage }}
+                    <div class="error">
+                    {% for error in form.sponsorship_usage.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="title">备注(可选)</td>
+                <td colspan="3">
+                    {{ form.remarks }}
+                    <div class="error">
+                    {% for error in form.remarks.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <p>申请说明：<br />1.点击上面各个空白方格填写相关资料，全部填完后点击下面“提交”按钮完成网上提交。<br />2.提交的信息经批准后，可以通过“以打印格式查看”页面打印表格，并送交相应单位批准。<br />如果已经经学院团委/校学生会/社 联/义工联批准同意，可直接到校团委处打印表格并审批。<br /></p>
+                </td>
+            </tr>
+        </table>
+
+        <div class="error" style="margin-left:50%">
+            {% for error in form.non_field_errors %}
+                {{ error }}&nbsp;
+            {% endfor %}
+        </div>  
+        <div class="button_container">
+            <input type="submit" value="提交" />
+            <input type="reset" value="重置" style="margin-left:100px;"/>
+        </div>
+    </form>
+{% endblock %}
+

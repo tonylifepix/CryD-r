@@ -1,0 +1,28 @@
+
+.input-field label {
+     color: #2196f3;
+}
+
+.input-field input[type=text]:focus + label {
+     color: #2196f3;
+}
+
+.input-field input[type=text]:focus {
+     border-bottom: 1px solid #2196f3;
+     box-shadow: 0 1px 0 0 #2196f3;
+}
+
+h1 .gdtitle{
+        margin: 1rem;
+}
+
+ .warning{
+    color: red;
+    text-align: center;
+
+}
+
+p{
+    text-align: center;
+}
+

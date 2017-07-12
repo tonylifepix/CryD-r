@@ -1,0 +1,58 @@
+{% extends 'table_base.html' %}
+
+{% block htmltitle %}南区运动广场二楼平台场地申请{% endblock %}
+
+{% block htmlhead %}
+    {% load html_tools %}
+
+    {{ 'south_stadium/table.css'      | as_css }}
+
+    {{ 'artDialog/v4/artDialog.js'    | as_js  }}
+    {{ 'artDialog/v4/skins/opera.css' | as_css }}
+    {{ 'artDialog/popupBox.css'       | as_css }}
+
+    {{ 'popupBox.js'  | as_js  }}
+{% endblock %}
+
+{% block top_title %}<h1 style="font-size:50px">南区运动广场二楼平台场地申请</h1>{% endblock %}
+{% block title %}南区运动广场二楼平台一周安排表(图形版){% endblock %}
+
+{% block main_content %}
+    <table class="app_table">
+        <tr class="date">
+            <td class="blue">运动广场二楼</td>
+            {% for date in table.date %}
+                <td>{{ date | date:"n月d日" }}<br />{{ date | date:"l" }}</td>
+            {% endfor %}
+        </tr>
+
+        {% load all_approved %}
+        {% for time, apps_7days in table.content %}
+            <tr>
+                <td class="timing">{{ time }}</td>
+                {% for apps in apps_7days %}
+                    {% if apps %}
+                    <td class="{% if apps|all_approved %}red{%else%}gray{%endif%}"
+                        data-app-id="[
+							{% for app in apps %}
+                                {
+                                    id:'{{ app.id }}',
+									title:'{{app.activity}}',
+									approved:'{{ app.approved }}'
+                                }   
+                                {% if not forloop.last %},{% endif %}
+							{% endfor %}
+                        ]"
+						onclick="javascript:showAppList( this.getAttribute('data-app-id'), 'south_stadium' )">
+                        {# {% for app in apps %} #}
+                        {#     <a href="#">{{ app.activity }}</a> #}
+                        {# {% endfor %} #}
+                        </td>
+                    {% else %}
+                    <td class="blue"></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

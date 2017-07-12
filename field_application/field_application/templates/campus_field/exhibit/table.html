@@ -1,0 +1,66 @@
+{% extends 'table_base.html' %}
+
+{% load range %}
+{% load get_by_index %}
+
+{% block htmltitle %}校园展览场地申请{% endblock %}
+
+{% block htmlhead %}
+    {% load html_tools %}
+    
+    {{ 'campus_field/table.css' | as_css }}
+
+    {{ 'artDialog/v4/artDialog.js'    | as_js  }}
+    {{ 'artDialog/v4/skins/opera.css' | as_css }}
+    {{ 'artDialog/popupBox.css'       | as_css }}
+
+    {{ 'popupBox.js'  | as_js  }}
+{% endblock %}
+
+{% block top_title %}<h1>校园展览场地申请</h1>{% endblock %}
+{% block title %}校园展览场地申请一周安排表(图形版){% endblock %}
+
+{% block main_content %}
+    {% load check_approved %}
+            <table class="app_table">
+                <tr class="date">
+                    <td class="blue" rowspan="2">活动类型<br />展览活动</td>
+                    {% for date in table.date %}
+                    <td colspan="2">{{ date | date:"n月d日" }}<br />{{ date | date:"l" }}</td>
+                    {% endfor %}
+                </tr>
+                <tr class="mor_aft">
+                    {% for i in 14|get_range %}
+                    <td>{% cycle '上午' '下午' %}</td>
+                    {% endfor %}
+                </tr>
+                {% for place, apps_every_week in table.content %}
+                    <tr>
+                        <td class="place">{{ place }}</td>
+                        {% for apps_every_day in apps_every_week %}
+                            {% for apps in apps_every_day %}
+                                {% if apps %}
+                                <td class="{% if apps|all_approved %}red{%else%}gray{%endif%}"
+                                    data-app-id="[
+                                        {% for app in apps %} 
+                                            {
+                                                id:'{{ app.id }}',
+                                                title:'{{app.activity}}',
+                                                approved:'{{ app.approved }}',
+                                                app_time:'{{ app.application_time | date:"n月d日 H:i:s" }}'
+                                            } 
+                                            {% if not forloop.last %},{% endif %}
+                                        {% endfor %}
+                                    ]"
+                                    onclick="javascript:showAppList( this.getAttribute('data-app-id'), 'exhibit' )">
+                                </td>
+                                {% else %}
+                                    <td class="blue"></td>
+                                {% endif %}
+                            {% endfor %}
+
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+{% endblock %}

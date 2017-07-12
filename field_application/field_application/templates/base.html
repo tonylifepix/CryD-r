@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta http-equiv="Content-Language" content="zh-CN">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="深圳大学,深大,荔园,学子天地,场地申请,南区体育馆,运动广场,申请表">
+    <meta name="description" content="深圳大学资讯传媒社区, 荔园信息聚集平台">
+    <title>{% block htmltitle %} {% endblock %}</title>
+    {% load html_tools %}
+    {{ 'base.css' | as_css }}
+    {{ 'materialize.min.css' | as_css }}
+	{{ 'jQuery/jquery-3.2.1.min.js' | as_js }}
+	{{ 'materialize.min.js' | as_js}}
+    {% block base_htmlhead %}{% endblock %}
+</head>
+<body>
+    <nav class="nav-extended blue">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="nav-wrapper">
+                        <span class="ostitle"><a href="/"><img src="/static/images/szu_logo.png" class="logo"></a></span>
+                        <ul class="right hide-on-med-and-down">
+							{% if user.is_authenticated %}
+							<li>{{ user.organization.chinese_name }}</li>
+							<li><a href="{% url 'account:signout' %}">注销</a></li>
+                            <li><a href="{% url 'account:reset_password' %}">修改密码</a></li>
+							<li><a href="{% url 'account:edit_profile' user.pk %}">编辑资料</a></li>
+                            <li><a href="{% url 'account:profile' user.pk %}">查看资料</a></li>
+							{% if perms.account.manager %}
+							<li><a href="{% url 'account:org_manage' %}">管理组织</a></li>
+							{% endif %}
+							{% else %}
+                            <li><a href="{% url 'account:signin' %}">登录</a></li>
+                            <li><a href="{% url 'account:signup' %}">注册</a></li>
+							{% endif %}
+							<li><a href="{% url 'document:index' %}">表格下载</a></li>
+                        </ul>
+                        {% block top_title %}<h1 class="gdtitle">场地申请系统</h1>{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+            <div class="card-panel">
+                <a href="/">【返回场地申请主页】</a>
+                <a href="../manage/">【管理场地申请】</a>
+                <a href="../table/">【查看场地申请情况】</a>
+            </div>
+            </div>
+        <div class="row">
+            <div class="col s12">
+                {% block main_container %}
+                {% endblock %}
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <footer class="page-footer blue">
+        <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">网站有问题？</h5>
+                <p class="grey-text text-lighten-4" style="text-align:left;">如果你发现网站有任何问题,请立刻联系我们(陈同学,qq649743466)，或者在我们的办公时间（周一到周五第3~4、5~6、7~8节课）到我们的办公室：西南综合服务楼一楼112号室 告知我们。<del>就算没人在你也可以贴个便利贴神马的</del></p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">关注学子天地公众号</h5>
+                <img src="/static/images/stu_barcode.jpg">
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            ©2017 StuCampus·SZU ALL RIGHTS RESERVED.
+            <a class="grey-text text-lighten-4 right" href="http://stu.szu.edu.cn/">版权所有© 深圳大学·学子天地 技术开发部</a>
+            </div>
+          </div>
+    </footer>
+</body>
+</html>

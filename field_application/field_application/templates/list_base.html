@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block base_htmlhead %}
+    {% load html_tools %}
+    {{ 'list/list.css' | as_css }}
+
+    {{ 'artDialog/v4/artDialog.js'    | as_js  }}
+    {{ 'artDialog/v4/skins/opera.css' | as_css }}
+    {{ 'artDialog/popupBox.css'       | as_css }}
+
+    {{ 'popupBox.js'  | as_js  }}
+    <script>
+        var plc = location.pathname.split('/')[1];
+    </script>
+    {% block htmlhead %}{% endblock %}
+{% endblock %}
+
+{% block main_container %}
+    {% block main_content %}
+    {% endblock %}
+{% endblock %}

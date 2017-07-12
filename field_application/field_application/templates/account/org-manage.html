@@ -1,0 +1,43 @@
+{% extends 'account/account_base.html' %}
+
+{% block htmltitle %}管理社团/组织{% endblock %}
+
+{% block base_htmlhead %}
+    {% load html_tools %}
+    {{ 'account/account.css' | as_css }}
+{% endblock %}
+
+{% block main_container %}
+<table class="table">
+	<tr>
+		<td>部门英文名称</td>
+		<td>部门名称</td>
+		<td>主管单位</td>
+		<td>指导老师</td>
+		<td>指导老师联系方式</td>
+		<td>所属部门</td>
+		<td>组织负责人</td>
+		<td>负责人联系方式</td>
+		<td>是否被禁用</td>
+		<td>禁用帐号</td>
+		<td>重置密码为123456</td>
+	</tr>
+	{% for org in list %}
+	<tr {% if org.is_banned %} style="background-color: #aaaaaa;" {% endif %}>
+		<td>{{ org.user.username }}</td>
+		<td>{{ org.chinese_name }}</td>
+		<td>{{ org.org_in_charge }}</td>
+		<td>{{ org.tutor }}</td>
+		<td>{{ org.tutor_contact_infor }}</td>
+		<td>{{ org.belong_to }}</td>
+		<td>{{ org.director }}</td>
+		<td>{{ org.director_contact_infor }}</td>
+		<td>{{ org.is_banned }}</td>
+		<td><a href="{% url 'account:disable_org' %}?id={{ org.pk }}">{% if not org.is_banned %}设置为禁用{% else %}设置为可用{% endif %}</a></td>
+		<td><a href="{% url 'account:manager_reset_password' %}?id={{ org.pk }}">重置</a></td>
+	</tr>
+	{% endfor %}
+</table>
+
+	
+{% endblock %}

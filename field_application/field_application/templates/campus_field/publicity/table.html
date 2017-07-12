@@ -1,0 +1,120 @@
+{% extends 'table_base.html' %}
+
+{% block htmltitle %}校园露天场地申请{% endblock %}
+
+{% block htmlhead %}
+    {% load html_tools %}
+    
+    {{ 'campus_field/table.css' | as_css }}
+
+    {{ 'artDialog/v4/artDialog.js'    | as_js  }}
+    {{ 'artDialog/v4/skins/opera.css' | as_css }}
+    {{ 'artDialog/popupBox.css'       | as_css }}
+
+    {{ 'popupBox.js'  | as_js  }}
+{% endblock %}
+
+{% load range %}
+{% load get_by_index %}
+
+{% block top_title %}<h1>校园露天场地申请</h1>{% endblock %}
+{% block title %}校园露天场地申请一周安排表(图形版){% endblock %}
+
+{% block main_content %}
+    {% load check_approved %}
+            <table class="app_table">
+                <tr class="date">
+                    <td class="blue place bold_border" rowspan="5">活动类型<br />设点/派发传单/其它</td>
+                    {% for date in table.date %}
+                    <td class="bold_border" colspan="3">{{ date | date:"n月d日" }}<br />{{ date | date:"l" }}</td>
+                    {% endfor %}
+                </tr>
+
+                {% for j in 4|get_range %}
+                <tr style="text-align:left">
+                    {% cycle '8点--<br />9点' '11点--<br />12点' '14点--<br />15点' '17点--<br />18点' as left silent %}
+                    {% cycle '9点--<br />10点' '12点--<br />13点' '15点--<br />16点' '18点--<br />19点' as mid silent %}
+                    {% cycle '10点--<br />11点' '13点--<br />14点' '16点--<br />17点' ''  as right silent %}
+                    {% for i in 7|get_range %}
+                        <td >{{ left }}</td>
+                        <td>{{ mid }}</td>
+                        <td class="bold_border_right">{{ right }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+
+                {% for place, apps_every_week in table.content %}
+                        {% for row in 4|get_range %}
+                            <tr class="nine">
+                            {% if forloop.first %}
+                            <td class="bold_border" rowspan="4">{{ place }}</td>
+                            {% endif %}
+
+                            {% cycle 0 3 6 9 as left silent %}
+                            {% cycle 1 4 7 10 as mid silent %}
+                            {% cycle 2 5 8 11 as right silent %}
+                            {% for apps_every_day in apps_every_week %}
+
+                                {% if apps_every_day|get:left %}
+                                <td class="{% if apps_every_day|get:left|all_approved %}red{%else%}gray{%endif%}"
+                                    data-app-id="[
+                                        {% for app in apps_every_day|get:left %}
+                                            {
+                                                id:'{{ app.id }}',
+                                                title:'{{app.activity}}',
+                                                approved:'{{ app.approved }}',
+                                                app_time:'{{ app.application_time | date:"n月d日 H:i:s" }}'
+                                            }
+                                            {% if not forloop.last %}, {% endif %} 
+                                        {% endfor %}
+                                    ]"
+                                    onclick="javascript:showAppList( this.getAttribute('data-app-id'), 'publicity' )">
+                                </td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+
+                                {% if apps_every_day|get:mid %}
+                                <td class="{% if apps_every_day|get:mid|all_approved %}red{%else%}gray{%endif%}"
+                                    data-app-id="[
+                                        {% for app in apps_every_day|get:mid %}
+                                            {
+                                                id:'{{ app.id }}',
+                                                title:'{{app.activity}}',
+                                                approved:'{{ app.approved }}',
+                                                app_time:'{{ app.application_time | date:"n月d日 H:i:s" }}' 
+                                            }
+                                            {% if not forloop.last %}, {% endif %} 
+                                        {% endfor %}
+                                    ]"
+                                    onclick="javascript:showAppList( this.getAttribute('data-app-id'), 'publicity' )">
+                                </td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+
+                                {% if apps_every_day|get:right %}
+                                <td class="bold_border_right {% if apps_every_day|get:right|all_approved %}red{%else%}gray{%endif%}"   
+                                    data-app-id="[
+                                        {% for app in apps_every_day|get:right %}
+                                            {
+                                                id:'{{ app.id }}',
+                                                title:'{{app.activity}}',
+                                                approved:'{{ app.approved }}',
+                                                app_time:'{{ app.application_time | date:"n月d日 H:i:s" }}' 
+                                            }
+                                            {% if not forloop.last %}, {% endif %} 
+                                        {% endfor %}
+                                    ]"
+                                    onclick="javascript:showAppList( this.getAttribute('data-app-id'), 'publicity' )">
+                                </td>
+                                {% else %}
+                                    <td class="bold_border_right"></td>
+                                {% endif %}
+
+                            {% endfor %}
+                            </tr>
+                        {% endfor %}
+                {% endfor %}
+            </table>
+{% endblock %}

@@ -1,0 +1,58 @@
+.table{
+    margin-top: 30px;
+    width: 100%;
+    font-size: 12px;
+    color: #000000;
+    text-align: center;
+    border-collapse:collapse;
+}
+.table td{
+    padding: 10px 5px;
+    border: solid #ffffff 2px;
+}
+.page{
+    width: 1000px;
+    height: 15px;
+    position: relative;
+    margin-top: 30px;
+    overflow: hidden;
+    background-color: rgb(239, 239, 239);
+    font-size: 12px;
+    text-align:center;
+}
+.page a,.table a{
+    color: #4d6ff7;
+    text-decoration: none;
+}
+.page a:hover,.table a:hover{
+    color: #384783;
+    text-decoration: none;
+}
+
+div.search{
+    color: #4d6ff7;
+    text-align: center;
+}
+.search a{
+    text-decoration: none;
+}
+.search a:hover{
+    color: #384783;
+    text-decoration: none;
+}
+.error span{
+    color: #ff0000;
+}
+
+table.app_table {
+    border-collapse: collapse;
+    color: #000000;
+    font-size: 12px;
+    text-align: center;
+}
+table.app_table td {
+    border: 2px solid #FFFFFF;
+}
+tr.app td{
+    cursor: pointer;
+}

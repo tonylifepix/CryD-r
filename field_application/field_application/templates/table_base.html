@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block base_htmlhead %}
+    {% load html_tools %}
+    {{ 'table/apply_main.css' | as_css }}
+    {% block htmlhead %}{% endblock %}
+    <style type="text/css">
+    .red{ background-color: red; }
+    .gray{ background-color: gray; }
+    .black{ background-color: black; }
+    </style>
+{% endblock %}
+
+
+{% block main_container %}
+			<div class="col s12">
+                <span class="name nav-content">{% block title %}{% endblock %}</span>
+                <span class="time nav-content">当前时间: {% now "Y年n月d日 l"%}</span>
+				<ul class="week nav-content">
+					<a href="?week={{ curr_week|add:"-1" }}">〖上一周〗</a>
+					<a href="?week=0">〖本周〗</a>
+					<a href="?week={{ curr_week|add:"1" }}">〖下一周〗</a>
+				</ul>
+				<ul class="choice nav-content">
+					<a href="../list/">【文字版】</a>
+					<a href="../apply/">【网上申请】</a>
+				</ul>
+			</div>
+            {% block main_content %}
+            {% endblock %}
+{% endblock %}

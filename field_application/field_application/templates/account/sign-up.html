@@ -1,0 +1,124 @@
+{% extends 'account/account_base.html' %}
+
+{% block htmltitle %}注册{% endblock %}
+
+{% block base_htmlhead %}
+    {% load html_tools %}
+    {{ 'account/account.css' | as_css }}
+{% endblock %}
+
+{% block main_container %}
+<div class="container">
+    <div class="row">
+        <form action="{% url 'account:signup' %}" method="POST" >
+        {% csrf_token %}
+            <div class="message_list">
+                <label class="item">部门名称</label>
+                {{ form.chinese_name }}
+                <label class="error">
+                    {% for error in form.chinese_name.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                </label>            
+            </div>
+            <div class="message_list">
+                <label class="item">部门英文名称</label>
+                {{ form.username }}
+                <label class="error">
+                    {% for error in form.username.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                </label>            
+            </div>
+            <div class="message_list">
+                <label class="item">密码</label>
+                {{ form.password1 }}
+                <label class="error">
+                    {% for error in form.password1.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                </label>            
+            </div>
+            <div class="message_list">
+                <label class="item">密码确认</label>
+                {{ form.password2 }}
+                <label class="error">
+                    {% for error in form.password2.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                </label>            
+            </div>    
+            <div class="message_list">
+                <label class="item">主管单位</label>
+                {{ form.org_in_charge }}
+                <label class="error">
+                    {% for error in form.org_in_charge.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                </label>            
+            </div>
+            <div class="message_list">
+                <label class="item">指导老师</label>
+                {{ form.tutor }}
+                <label class="error">
+                    {% for error in form.tutor.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                </label>            
+            </div>            
+            <div class="message_list">
+                <label class="item">指导老师联系方式</label>
+                {{ form.tutor_contact_infor }}
+                <label class="error">
+                    {% for error in form.tutor_contact_infor.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                </label>            
+            </div>   
+            <div class="message_list">
+                <label class="item">组织负责人</label>
+                {{ form.director }}
+                <label class="error">
+                    {% for error in form.director.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                </label>            
+            </div>      
+            <div class="message_list">
+                <label class="item">负责人联系方式</label>
+                {{ form.director_contact_infor }}
+                <label class="error">
+                    {% for error in form.director_contact_infor.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                </label>            
+            </div>        
+            <div class="message_list">
+                <label class="item">所属部门</label>
+                {{ form.belong_to }}
+                <label class="error">
+                    {% for error in form.belong_to.errors %}
+                        {{ error }}&nbsp;
+                    {% endfor %}
+                </label>            
+            </div>
+            
+            <div class="error" style="margin-left:50%">
+                {% for error in form.non_field_errors %}
+                    {{ error }}&nbsp;
+                {% endfor %}
+            </div>  
+            <div class="message_list" >
+                <input type="submit" value="提交" style="margin:20px 0px 0px 21%" />
+            </div>
+            <div class="col s12" style="text-align: left; color: #ff0000; width: 400px; margin: 0 auto;">
+                新注册账号默认为禁用状态，账号启用流程：<br/>
+                1.学子天地网站网上注册<br/>
+                2.在场地申请主页<a href="{% url 'document:index' %}">表格下载</a>处下载并填写"场地申请帐号启用申请表"<br/>
+                3.上级主管单位签章<br/>
+                4.交至学生事务中心一楼校团委窗口审批启用
+            </div>            
+        </form>
+    </div>
+</div>
+{% endblock %}
